@@ -14,35 +14,22 @@ on:
 
 jobs:
   build-test-deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-2core-arm64
     permissions:
       packages: write
     strategy:
       fail-fast: false
       matrix:
         distro_to_build: [
-          alma-8,
-          alma-9,
-          debian-10,
-          debian-11,
           debian-12,
-          fedora-39,
-          fedora-40,
-          opensuse-15.4,
-          opensuse-15.5,
-          opensuse-15.6,
-          ubuntu-18.04,
-          ubuntu-20.04,
-          ubuntu-22.04,
-          ubuntu-24.04
         ]
         targetplatform: [
-          linux/amd64
+          linux/arm64
         ]
     env:
       DISTRO_TO_BUILD: ${{ matrix.distro_to_build }}
       TARGETPLATFORM: ${{ matrix.targetplatform }}
-      REPO: crops/yocto
+      REPO: jackpocket/crops/yocto
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       GHCR_USERNAME: ${{ github.actor }}
@@ -57,5 +44,6 @@ jobs:
 
       # Deploy the images
       - name: Deploy
-        if: ${{ env.DOCKER_PASSWORD != '' && env.GHCR_PASSWORD != '' }}
+        #if: ${{ env.DOCKER_PASSWORD != '' && env.GHCR_PASSWORD != '' }}
+        if: ${{ env.GHCR_PASSWORD != '' }}
         run: ./deploy.sh
