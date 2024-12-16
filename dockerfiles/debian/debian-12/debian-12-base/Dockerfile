@@ -8,7 +8,8 @@ FROM debian:12
 
 ARG TARGETPLATFORM
 
-RUN apt-get clean && \
+RUN sed -i 's/^Components: main$/& contrib/' /etc/apt/sources.list.d/debian.sources && \
+    apt-get clean && \
     apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
         build-essential \
@@ -19,12 +20,14 @@ RUN apt-get clean && \
         fluxbox \
         gawk \
         git-core \
+        git-lfs \
         locales \
         lz4 \
         procps \
         python3 \
         python3-pip \
         python3-virtualenv \
+        repo \
         screen \
         socat \
         subversion \
