@@ -8,7 +8,9 @@ FROM debian:12
 
 ARG TARGETPLATFORM
 
-RUN apt-get clean && \
+RUN deb https://deb.debian.org/debian bookworm main contrib && \
+    deb-src https://deb.debian.org/debian bookworm main contrib && \
+    apt-get clean && \
     apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
         build-essential \
