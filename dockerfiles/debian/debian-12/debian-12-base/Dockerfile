@@ -8,8 +8,8 @@ FROM debian:12
 
 ARG TARGETPLATFORM
 
-RUN deb https://deb.debian.org/debian bookworm main contrib && \
-    deb-src https://deb.debian.org/debian bookworm main contrib && \
+RUN echo "deb https://deb.debian.org/debian bookworm main contrib" >> /etc/apt/sources.list && \
+    echo "deb-src https://deb.debian.org/debian bookworm main contrib" >> /etc/apt/sources.list && \
     apt-get clean && \
     apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
